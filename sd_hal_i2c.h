@@ -108,7 +108,7 @@ SD_I2C_Result SD_I2C_WriteWithNoRegisterAddress(I2C_HandleTypeDef* I2Cx, uint8_t
  * @param  count: Number of elements to write
  * @retval One of @ref SD_I2C_Result enumeration
  */
-SD_I2C_Result SD_I2C_WriteMultiWithNoRegisterAddress(I2C_HandleTypeDef* I2Cx, uint8_t device_address, uint8_t* data, uint16_t count);
+SD_I2C_Result SD_I2C_WriteSomeWithNoRegisterAddress(I2C_HandleTypeDef* I2Cx, uint8_t device_address, uint8_t* data, uint16_t count);
 
 /**
  * @brief  Writes single byte in a 16-bit length register address
