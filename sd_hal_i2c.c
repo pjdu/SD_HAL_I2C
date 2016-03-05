@@ -86,7 +86,7 @@ SD_I2C_Result SD_I2C_WriteWithNoRegisterAddress(I2C_HandleTypeDef* I2Cx, uint8_t
 	return SD_I2C_Result_Ok;
 }
 
-SD_I2C_Result SD_I2C_WriteMultiWithNoRegisterAddress(I2C_HandleTypeDef* I2Cx, uint8_t device_address, uint8_t* data, uint16_t count)
+SD_I2C_Result SD_I2C_WriteSomeiWithNoRegisterAddress(I2C_HandleTypeDef* I2Cx, uint8_t device_address, uint8_t* data, uint16_t count)
 {
 
 	/* Try to transmit via I2C */
