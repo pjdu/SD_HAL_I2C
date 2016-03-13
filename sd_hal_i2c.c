@@ -86,7 +86,7 @@ SD_I2C_Result SD_I2C_WriteWithNoRegisterAddress(I2C_HandleTypeDef* I2Cx, uint8_t
 	return SD_I2C_Result_Ok;
 }
 
-SD_I2C_Result SD_I2C_WriteSomeWithNoRegisterAddress(I2C_HandleTypeDef* I2Cx, uint8_t device_address, uint8_t* data, uint16_t count)
+SD_I2C_Result SD_I2C_WriteMultiWithNoRegisterAddress(I2C_HandleTypeDef* I2Cx, uint8_t device_address, uint8_t* data, uint16_t count)
 {
 
 	/* Try to transmit via I2C */
@@ -122,7 +122,7 @@ SD_I2C_Result SD_I2C_Read(I2C_HandleTypeDef* I2Cx, uint8_t device_address, uint8
 		return SD_I2C_CheckError(I2Cx);
 
 	/* Receive multiple byte */
-	if (HAL_I2C_Master_Receive(I2Cx, device_address, data, 1, 1000) != HAL_OK)
+	if (HAL_I2C_Master_Receive(I2Cx, (uint16_t)device_address, data, 1, 1000) != HAL_OK)
 		return SD_I2C_CheckError(I2Cx);
 
 	/* Return OK */
@@ -132,12 +132,8 @@ SD_I2C_Result SD_I2C_Read(I2C_HandleTypeDef* I2Cx, uint8_t device_address, uint8
 SD_I2C_Result SD_I2C_ReadSome(I2C_HandleTypeDef* I2Cx, uint8_t device_address, uint8_t register_address, uint8_t* data, uint16_t count)
 {
 
-	/* Send register address */
-	if (HAL_I2C_Master_Transmit(I2Cx, (uint16_t)device_address, &register_address, 1, 1000) != HAL_OK)
-		return SD_I2C_CheckError(I2Cx);
-
-	/* Receive multiple byte */
-	if (HAL_I2C_Master_Receive(I2Cx, device_address, data, count, 1000) != HAL_OK)
+	/* transmit via I2C */
+	if (HAL_I2C_Mem_Read(I2Cx, (uint16_t)device_address, register_address,register_address > 0xFF ? I2C_MEMADD_SIZE_16BIT : I2C_MEMADD_SIZE_8BIT,data, 1, 1000) != HAL_OK)
 		return SD_I2C_CheckError(I2Cx);
 
 	/* Return OK */
